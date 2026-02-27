@@ -30,12 +30,7 @@ defineEmits<{
       <button v-if="mobile" class="btn btn-ghost lg:hidden" type="button" @click="$emit('close')">Back</button>
     </header>
 
-    <div class="mb-3 flex items-center gap-2 rounded-2xl border border-app-border-soft bg-white/70 px-3 py-2">
-      <button class="toolbar-btn" type="button" aria-label="Bold">B</button>
-      <button class="toolbar-btn" type="button" aria-label="Italic"><span class="italic">I</span></button>
-      <button class="toolbar-btn" type="button" aria-label="Heading">H</button>
-      <div class="ml-auto text-xs text-app-muted">{{ loading ? "Saving..." : "Ready" }}</div>
-    </div>
+    <p class="mb-3 text-xs text-app-muted">{{ loading ? "Saving changes..." : "Ready to edit" }}</p>
 
     <label class="form-label">
       Title

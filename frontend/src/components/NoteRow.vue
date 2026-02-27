@@ -29,9 +29,9 @@ const snippet = computed(() => {
       <time class="shrink-0 text-xs text-app-muted">{{ new Date(note.updatedAt).toLocaleDateString() }}</time>
     </header>
     <p class="mt-1 line-clamp-2 text-xs text-app-muted">{{ snippet }}</p>
-    <footer class="mt-3 flex items-center justify-between">
-      <span class="tag-chip">note</span>
-      <span class="text-xs text-app-muted">Created {{ new Date(note.createdAt).toLocaleDateString() }}</span>
+    <footer class="mt-3 flex items-center justify-between text-xs text-app-muted">
+      <span>Created {{ new Date(note.createdAt).toLocaleDateString() }}</span>
+      <span>Updated {{ new Date(note.updatedAt).toLocaleDateString() }}</span>
     </footer>
   </article>
 </template>

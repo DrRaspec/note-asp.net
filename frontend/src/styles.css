@@ -107,14 +107,6 @@ body {
     @apply block text-xs font-semibold uppercase tracking-[0.1em] text-app-muted;
   }
 
-  .tag-chip {
-    @apply inline-flex items-center rounded-full border border-app-border bg-white px-2.5 py-1 text-xs font-medium text-app-muted;
-  }
-
-  .toolbar-btn {
-    @apply inline-flex h-8 w-8 items-center justify-center rounded-xl border border-app-border bg-white text-sm font-semibold text-app-muted transition hover:border-app-accent hover:bg-app-base hover:text-app-text;
-  }
-
   .toast {
     @apply rounded-2xl border border-app-accent bg-app-base px-3 py-2 text-sm text-app-text;
   }
