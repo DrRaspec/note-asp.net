@@ -29,35 +29,55 @@ Full-stack Notes app:
 - Visual Studio (for backend)
 - Node.js 20+ and VS Code (for frontend)
 - Docker Desktop
+- Git
 
-## Option A: Required workflow (Frontend in VS Code, Backend in Visual Studio, DB in Docker)
+## Quick Start (Recommended for beginners)
 
-1. Start SQL Server container:
+Run database in Docker, backend in Visual Studio, frontend in VS Code.
+
+1. Clone and open terminal at project root:
 
 ```powershell
-cd D:\MyProject\asp-net
-docker compose up -d sqlserver
+git clone <your-repo-url>
+cd asp-net
 ```
 
-2. Run backend in Visual Studio:
-- Open `backend/NotesApi/NotesApi.csproj`
-- Use `https` profile (API at `https://localhost:7287`)
-
-3. Run frontend in VS Code terminal:
+2. Start SQL Server container:
 
 ```powershell
-cd D:\MyProject\asp-net\frontend
+docker compose up -d sqlserver
+docker ps
+```
+
+You should see `notesapp-sqlserver` with status `healthy`.
+
+3. Run backend in Visual Studio:
+- Open `backend/NotesApi/NotesApi.csproj`
+- Select profile `https` (top toolbar)
+- Press `F5`
+- Confirm API is running at `https://localhost:7287`
+
+4. Run frontend in VS Code terminal:
+
+```powershell
+cd frontend
 copy .env.example .env
 npm install
 npm run dev
 ```
 
-Frontend runs at `http://localhost:5173`.
+5. Open app:
+- `http://localhost:5173`
+
+## Option A: Required workflow (same as quick start)
+
+- DB: Docker (`sqlserver` service)
+- Backend: Visual Studio
+- Frontend: VS Code terminal
 
 ## Option B: Full Docker stack
 
 ```powershell
-cd D:\MyProject\asp-net
 docker compose up -d --build
 ```
 
@@ -73,6 +93,36 @@ docker compose up -d --build
 - If you change SQL password in `docker-compose.yml`, update:
   - Local backend: `backend/NotesApi/appsettings.Development.json`
   - Docker API env: `ConnectionStrings__DefaultConnection`
+
+## Common issues (for new users)
+
+1. `SqlException: Cannot open database 'NotesAppDb' requested by the login`
+- Fix:
+```powershell
+docker compose down -v
+docker compose up -d sqlserver
+```
+- Then restart backend from Visual Studio.
+
+2. Frontend cannot call API / CORS / network error
+- Confirm backend is running at `https://localhost:7287`.
+- Confirm `frontend/.env` contains:
+```env
+VITE_API_BASE_URL=https://localhost:7287/api
+```
+- Restart `npm run dev` after changing `.env`.
+
+3. HTTPS certificate warning in browser
+- For local development only, proceed once and trust localhost dev certificate if prompted.
+
+4. Port already in use (`1433`, `5173`, or `7287`)
+- Stop the process/container using that port, then retry.
+
+## Stop services
+
+```powershell
+docker compose down
+```
 
 ## API endpoints
 
