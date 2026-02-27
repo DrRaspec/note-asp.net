@@ -1,0 +1,48 @@
+@NotesApi_HostAddress = https://localhost:7260
+@AuthToken = {{token}}
+@RefreshToken = {{refreshToken}}
+
+### Register
+POST {{NotesApi_HostAddress}}/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Demo User",
+  "email": "demo@example.com",
+  "password": "Password123!"
+}
+
+### Login
+POST {{NotesApi_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "demo@example.com",
+  "password": "Password123!"
+}
+
+### List notes
+GET {{NotesApi_HostAddress}}/api/notes?page=1&pageSize=10&sortBy=updatedAt&sortDir=desc
+Authorization: Bearer {{AuthToken}}
+
+### Create note
+POST {{NotesApi_HostAddress}}/api/notes
+Authorization: Bearer {{AuthToken}}
+Content-Type: application/json
+
+{
+  "title": "My first note",
+  "content": "Hello from Notes API"
+}
+
+### Refresh token
+POST {{NotesApi_HostAddress}}/api/auth/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "{{RefreshToken}}"
+}
+
+### Logout (revoke all active refresh tokens for current user)
+POST {{NotesApi_HostAddress}}/api/auth/logout
+Authorization: Bearer {{AuthToken}}

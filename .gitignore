@@ -1,0 +1,12 @@
+.dotnet/
+**/bin/
+**/obj/
+frontend/node_modules/
+frontend/dist/
+.vs/
+frontend/.env
+frontend/.env.local
+frontend/tsconfig.tsbuildinfo
+.DS_Store
+Thumbs.db
+.vscode/
