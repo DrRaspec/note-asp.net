@@ -2,7 +2,6 @@
 import { computed, ref, watch } from "vue";
 import AppShell from "./components/AppShell.vue";
 import AuthScreen from "./components/AuthScreen.vue";
-import BottomNav from "./components/BottomNav.vue";
 import EditorPanel from "./components/EditorPanel.vue";
 import FabButton from "./components/FabButton.vue";
 import NoteList from "./components/NoteList.vue";
@@ -24,7 +23,6 @@ import type { Note, UserSession } from "./types";
 const SESSION_KEY = "notes-app-session";
 
 type AuthMode = "login" | "register";
-type MobileTab = "notes" | "search" | "tags" | "settings";
 
 const session = ref<UserSession | null>(loadSession());
 const mode = ref<AuthMode>("login");
@@ -45,7 +43,6 @@ const totalCount = ref(0);
 const totalPages = ref(0);
 const message = ref("");
 const loading = ref(false);
-const mobileTab = ref<MobileTab>("notes");
 const mobileEditorOpen = ref(false);
 
 const selectedNote = computed(() => notes.value.find((note) => note.id === selectedNoteId.value) ?? null);
@@ -159,7 +156,6 @@ async function handleSelectNote(noteId: number): Promise<void> {
     editorTitle.value = note.title;
     editorContent.value = note.content;
     mobileEditorOpen.value = true;
-    mobileTab.value = "notes";
   } finally {
     loading.value = false;
   }
@@ -231,7 +227,6 @@ function handleNewDraft(): void {
   editorContent.value = "";
   message.value = "New draft.";
   mobileEditorOpen.value = true;
-  mobileTab.value = "notes";
 }
 
 function handleMobileBackToList(): void {
@@ -256,7 +251,6 @@ async function handleLogout(): Promise<void> {
   page.value = 1;
   totalCount.value = 0;
   totalPages.value = 0;
-  mobileTab.value = "notes";
   mobileEditorOpen.value = false;
 }
 
@@ -298,7 +292,7 @@ function clearSession(): void {
     <div class="grid gap-4 lg:grid-cols-[260px_minmax(330px,460px)_1fr] lg:gap-5">
       <Sidebar :session="session" :total-count="totalCount" />
 
-      <section v-if="mobileTab === 'notes' || mobileTab === 'search'" class="space-y-4" :class="mobileEditorOpen ? 'hidden lg:block' : ''">
+      <section class="space-y-4" :class="mobileEditorOpen ? 'hidden lg:block' : ''">
         <NoteList
           :notes="notes"
           :selected-note-id="selectedNoteId"
@@ -333,16 +327,6 @@ function clearSession(): void {
         />
       </section>
 
-      <section v-if="mobileTab === 'tags'" class="rounded-2xl border border-app-border bg-app-panel p-5 shadow-soft lg:hidden">
-        <h2 class="text-base font-semibold text-app-text">Tags</h2>
-        <p class="mt-2 text-sm text-app-muted">Tag organization UI is ready. Data model can be plugged in later without API changes.</p>
-      </section>
-
-      <section v-if="mobileTab === 'settings'" class="rounded-2xl border border-app-border bg-app-panel p-5 shadow-soft lg:hidden">
-        <h2 class="text-base font-semibold text-app-text">Settings</h2>
-        <p class="mt-2 text-sm text-app-muted">Profile and app preferences screen placeholder for future settings.</p>
-      </section>
-
       <section class="space-y-4" :class="mobileEditorOpen ? '' : 'hidden lg:block'">
         <EditorPanel
           :selected-note-id="selectedNoteId"
@@ -361,6 +345,5 @@ function clearSession(): void {
       </section>
     </div>
     <FabButton @click="handleNewDraft" />
-    <BottomNav :active-tab="mobileTab" @change="mobileTab = $event" />
   </AppShell>
 </template>

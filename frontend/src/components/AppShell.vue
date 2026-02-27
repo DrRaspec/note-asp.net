@@ -11,7 +11,7 @@ defineEmits<{
 </script>
 
 <template>
-  <main class="min-h-screen bg-app-base px-4 pb-24 pt-5 text-app-text sm:px-6 lg:px-8 lg:pb-8">
+  <main class="min-h-screen bg-app-base px-4 pb-8 pt-5 text-app-text sm:px-6 lg:px-8">
     <section class="mx-auto max-w-[1500px]">
       <header
         class="mb-4 flex items-center justify-between rounded-2xl border border-app-border bg-app-panel px-4 py-3 shadow-soft backdrop-blur lg:mb-6"
